@@ -380,12 +380,13 @@ impl<T: WasiView> udp::HostIncomingDatagramStream for T {
 
 #[async_trait]
 impl Subscribe for IncomingDatagramStream {
-    async fn ready(&mut self) {
+    async fn ready(&mut self) -> wasmtime::Result<()> {
         // FIXME: Add `Interest::ERROR` when we update to tokio 1.32.
         self.inner
             .ready(Interest::READABLE)
             .await
             .expect("failed to await UDP socket readiness");
+        Ok(())
     }
 }
 
@@ -514,7 +515,7 @@ impl<T: WasiView> udp::HostOutgoingDatagramStream for T {
 
 #[async_trait]
 impl Subscribe for OutgoingDatagramStream {
-    async fn ready(&mut self) {
+    async fn ready(&mut self) -> wasmtime::Result<()> {
         match self.send_state {
             SendState::Idle | SendState::Permitted(_) => {}
             SendState::Waiting => {
@@ -526,5 +527,6 @@ impl Subscribe for OutgoingDatagramStream {
                 self.send_state = SendState::Idle;
             }
         }
+        Ok(())
     }
 }
