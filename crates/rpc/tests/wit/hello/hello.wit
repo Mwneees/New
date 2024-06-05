@@ -1,0 +1,13 @@
+package rpc-test:hello;
+
+interface handler {
+    hello: func(name: string) -> string;
+}
+
+world hello-client {
+    import handler;
+}
+
+world hello-server {
+    export handler;
+}

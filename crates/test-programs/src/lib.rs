@@ -17,3 +17,20 @@ pub mod proxy {
         },
     });
 }
+
+pub mod rpc_hello {
+    wit_bindgen::generate!({
+        path: "../rpc/tests/wit/hello",
+        world: "hello-client",
+        default_bindings_module: "test_programs::rpc_hello",
+    });
+}
+
+pub mod rpc_sync {
+    wit_bindgen::generate!({
+        path: "../rpc/tests/wit/sync",
+        world: "sync-client",
+        default_bindings_module: "test_programs::rpc_sync",
+        additional_derives: [PartialEq, Eq],
+    });
+}
