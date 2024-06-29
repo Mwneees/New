@@ -179,6 +179,7 @@ pub mod sync {
                 "wasi:sockets/udp/udp-socket": super::super::sockets::udp::UdpSocket,
             },
             require_store_data_send: true,
+            features: ["clocks-timezone"],
         });
     }
     pub use self::generated::exports;
@@ -413,6 +414,7 @@ mod async_io {
             "wasi:cli/terminal-input/terminal-input": crate::stdio::TerminalInput,
             "wasi:cli/terminal-output/terminal-output": crate::stdio::TerminalOutput,
         },
+        features: ["clocks-timezone"],
     });
 }
 
