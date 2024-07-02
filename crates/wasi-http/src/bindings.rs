@@ -38,6 +38,7 @@ mod generated {
         trappable_error_type: {
             "wasi:http/types/error-code" => crate::HttpError,
         },
+        features: ["clocks-timezone"],
     });
 }
 
@@ -64,6 +65,7 @@ pub mod sync {
                 "wasi": wasmtime_wasi::bindings, // everything else
             },
             require_store_data_send: true,
+            features: ["clocks-timezone"],
         });
     }
 

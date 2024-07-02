@@ -3,7 +3,7 @@ pub mod nn;
 pub mod preview1;
 pub mod sockets;
 
-wit_bindgen::generate!("test-command" in "../wasi/wit");
+wit_bindgen::generate!("test-command" in "../wasi/wit", features: ["clocks-timezone"]);
 
 pub mod proxy {
     wit_bindgen::generate!({
@@ -15,5 +15,6 @@ pub mod proxy {
             "wasi:http/types@0.2.0": crate::wasi::http::types,
             "wasi:http/outgoing-handler@0.2.0": crate::wasi::http::outgoing_handler,
         },
+        features: ["clocks-timezone"],
     });
 }
