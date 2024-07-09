@@ -291,6 +291,7 @@ pub fn add_to_linker_async<T: WasiView>(linker: &mut Linker<T>) -> anyhow::Resul
 
     crate::bindings::clocks::wall_clock::add_to_linker_get_host(l, closure)?;
     crate::bindings::clocks::monotonic_clock::add_to_linker_get_host(l, closure)?;
+    crate::bindings::clocks::timezone::add_to_linker_get_host(l, closure)?;
     crate::bindings::filesystem::types::add_to_linker_get_host(l, closure)?;
     crate::bindings::filesystem::preopens::add_to_linker_get_host(l, closure)?;
     crate::bindings::io::error::add_to_linker_get_host(l, closure)?;
@@ -381,6 +382,7 @@ pub fn add_to_linker_sync<T: WasiView>(
 
     crate::bindings::clocks::wall_clock::add_to_linker_get_host(l, closure)?;
     crate::bindings::clocks::monotonic_clock::add_to_linker_get_host(l, closure)?;
+    crate::bindings::clocks::timezone::add_to_linker_get_host(l, closure)?;
     crate::bindings::sync::filesystem::types::add_to_linker_get_host(l, closure)?;
     crate::bindings::filesystem::preopens::add_to_linker_get_host(l, closure)?;
     crate::bindings::io::error::add_to_linker_get_host(l, closure)?;
