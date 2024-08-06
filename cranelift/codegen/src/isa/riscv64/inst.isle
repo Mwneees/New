@@ -2998,20 +2998,22 @@
   (gen_trapif (IntCC.Equal) test (zero_reg) trap_code))
 
 ;; Converts bool to the corresponding {in,}equality condition
-(decl bool_to_cc (bool) IntCC)
-(rule (bool_to_cc $true)
-  (IntCC.Equal))
+(type ZeroCond
+      (enum
+       Zero
+       NonZero))
 
-(rule (bool_to_cc $false)
-  (IntCC.NotEqual))
+(decl zero_cond_to_cc (ZeroCond) IntCC)
+(rule (zero_cond_to_cc (ZeroCond.Zero)) (IntCC.Equal))
+(rule (zero_cond_to_cc (ZeroCond.NonZero)) (IntCC.NotEqual))
 
 ;; Builds an instruction sequence for wide trapz/nz
-(decl gen_trapif_zero_i128 (bool ValueRegs TrapCode) InstOutput)
-(rule (gen_trapif_zero_i128 is_zero value trap_code)
+(decl gen_trapif_val_i128 (ZeroCond ValueRegs TrapCode) InstOutput)
+(rule (gen_trapif_val_i128 zero_cond value trap_code)
   (let ((lo XReg (value_regs_get value 0))
         (hi XReg (value_regs_get value 1))
         (test XReg (rv_or hi lo)))
-      (gen_trapif (bool_to_cc is_zero) test (zero_reg) trap_code)))
+      (gen_trapif (zero_cond_to_cc zero_cond) test (zero_reg) trap_code)))
 
 ;;;; Helpers for Emitting Calls ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
