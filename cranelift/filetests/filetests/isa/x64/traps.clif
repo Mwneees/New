@@ -1,4 +1,5 @@
 test compile precise-output
+set enable_llvm_abi_extensions=true
 target x86_64
 
 function %trap() {
@@ -75,10 +76,9 @@ block0(v0: i64):
 ;   retq
 ;   ud2 ; trap: user0
 
-function %trapz_i128(i64) {
-block0(v0: i64):
-  v1 = load.i128 v0
-  trapz v1, user0
+function %trapz_i128(i128) {
+block0(v0: i128):
+  trapz v0, user0
   return
 }
 
@@ -86,10 +86,8 @@ block0(v0: i64):
 ;   pushq   %rbp
 ;   movq    %rsp, %rbp
 ; block0:
-;   movq    0(%rdi), %rcx
-;   movq    8(%rdi), %rdx
-;   orq     %rdx, %rcx, %rdx
-;   testq   %rdx, %rdx
+;   orq     %rsi, %rdi, %rsi
+;   testq   %rsi, %rsi
 ;   jz #trap=user0
 ;   movq    %rbp, %rsp
 ;   popq    %rbp
@@ -100,11 +98,9 @@ block0(v0: i64):
 ;   pushq %rbp
 ;   movq %rsp, %rbp
 ; block1: ; offset 0x4
-;   movq (%rdi), %rcx ; trap: heap_oob
-;   movq 8(%rdi), %rdx ; trap: heap_oob
-;   orq %rcx, %rdx
-;   testq %rdx, %rdx
-;   je 0x1c
+;   orq %rdi, %rsi
+;   testq %rsi, %rsi
+;   je 0x15
 ;   movq %rbp, %rsp
 ;   popq %rbp
 ;   retq
@@ -138,10 +134,9 @@ block0(v0: i64):
 ;   retq
 ;   ud2 ; trap: user0
 
-function %trapnz_i128(i64) {
-block0(v0: i64):
-  v1 = load.i128 v0
-  trapnz v1, user0
+function %trapnz_i128(i128) {
+block0(v0: i128):
+  trapnz v0, user0
   return
 }
 
@@ -149,10 +144,8 @@ block0(v0: i64):
 ;   pushq   %rbp
 ;   movq    %rsp, %rbp
 ; block0:
-;   movq    0(%rdi), %rcx
-;   movq    8(%rdi), %rdx
-;   orq     %rdx, %rcx, %rdx
-;   testq   %rdx, %rdx
+;   orq     %rsi, %rdi, %rsi
+;   testq   %rsi, %rsi
 ;   jnz #trap=user0
 ;   movq    %rbp, %rsp
 ;   popq    %rbp
@@ -163,11 +156,9 @@ block0(v0: i64):
 ;   pushq %rbp
 ;   movq %rsp, %rbp
 ; block1: ; offset 0x4
-;   movq (%rdi), %rcx ; trap: heap_oob
-;   movq 8(%rdi), %rdx ; trap: heap_oob
-;   orq %rcx, %rdx
-;   testq %rdx, %rdx
-;   jne 0x1c
+;   orq %rdi, %rsi
+;   testq %rsi, %rsi
+;   jne 0x15
 ;   movq %rbp, %rsp
 ;   popq %rbp
 ;   retq
