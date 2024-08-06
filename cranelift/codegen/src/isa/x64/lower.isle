@@ -1814,12 +1814,12 @@
 
 ;;;; Rules for `trapz` ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (rule (lower (trapz val code))
-      (side_effect (trap_if_reg (ZeroCond.Zero) val code)))
+      (side_effect (trap_if_val (ZeroCond.Zero) val code)))
 
 ;;;; Rules for `trapnz` ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (rule (lower (trapnz val code))
-      (side_effect (trap_if_reg (ZeroCond.NonZero) val code)))
+      (side_effect (trap_if_val (ZeroCond.NonZero) val code)))
 
 ;;;; Rules for `uadd_overflow_trap` ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

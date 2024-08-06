@@ -1958,12 +1958,12 @@
 ;;;;;  Rules for `trapz`;;;;;;;;;
 
 (rule (lower (trapz val trap_code))
-  (trap_if_reg (ZeroCond.Zero) val trap_code))
+  (trap_if_val (ZeroCond.Zero) val trap_code))
 
 ;;;;;  Rules for `trapnz`;;;;;;;;;
 
 (rule (lower (trapnz val trap_code))
-  (trap_if_reg (ZeroCond.NonZero) val trap_code))
+  (trap_if_val (ZeroCond.NonZero) val trap_code))
 
 ;;;; Rules for `select` ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
